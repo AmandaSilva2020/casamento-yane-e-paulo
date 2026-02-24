@@ -23,7 +23,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260223-5">
 </head>
-<body>
+<body class="pre-reveal">
+  <div class="splash-screen" id="splashScreen">
+    <div class="envelope-stage" aria-hidden="true">
+      <div class="envelope-paper"></div>
+      <div class="envelope-flap-top"></div>
+      <div class="envelope-flap-bottom"></div>
+    </div>
+    <div class="splash-content">
+      <button class="splash-seal" id="splashSeal" type="button" aria-label="Abrir convite"></button>
+      <p class="splash-hint">Toque no monograma para abrir</p>
+    </div>
+  </div>
+
   <header class="topbar">
     <div class="brand">Y&P</div>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">

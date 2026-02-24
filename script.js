@@ -2,6 +2,8 @@ const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 const links = Array.from(document.querySelectorAll(".nav-link"));
 const mainContent = document.getElementById("mainContent");
+const splashScreen = document.getElementById("splashScreen");
+const splashSeal = document.getElementById("splashSeal");
 const WEB3FORMS_ACCESS_KEY = "15a138bd-2431-4dca-8ecb-8557b3b1c0d5";
 
 const lightbox = document.getElementById("galleryLightbox");
@@ -18,6 +20,7 @@ let mainController = null;
 let sectionObserver = null;
 let galleryImages = [];
 let currentGalleryIndex = 0;
+let splashOpened = false;
 
 const closeMobileMenu = () => {
   if (window.innerWidth <= 860 && sidebar) {
@@ -318,6 +321,39 @@ const loadGiftPageIntoMain = async (url) => {
   sectionObserver?.disconnect();
   setActiveNav("presentes");
 };
+
+const openSplashInvitation = () => {
+  if (!splashScreen || splashOpened) return;
+  splashOpened = true;
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  sidebar?.classList.remove("open");
+  document.body.classList.remove("menu-open");
+  menuBtn?.setAttribute("aria-expanded", "false");
+  splashScreen.classList.add("opening");
+
+  window.setTimeout(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.body.classList.remove("pre-reveal");
+    document.body.classList.add("site-revealed");
+  }, 120);
+
+  window.setTimeout(() => {
+    splashScreen.classList.add("revealed");
+  }, 1180);
+
+  window.setTimeout(() => {
+    splashScreen.remove();
+  }, 1480);
+};
+
+if (splashScreen && splashSeal) {
+  splashSeal.addEventListener("click", openSplashInvitation);
+} else {
+  document.body.classList.remove("pre-reveal");
+  document.body.classList.add("site-revealed");
+}
 
 const restoreMainContent = () => {
   if (!mainContent || !isGiftView) return;
