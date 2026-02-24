@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yane & Paulo | Casamento</title>
+  <meta name="description" content="Site de noivado de Yane e Paulo">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Yane & Paulo | Casamento">
+  <meta property="og:description" content="Celebrando o casamento de Yane e Paulo em 11 de abril de 2026.">
+  <meta property="og:image" content="media/YeP.jpeg">
+  <meta property="og:image:alt" content="Monograma Y&P em arte floral">
+  <meta property="og:image:width" content="1125">
+  <meta property="og:image:height" content="1127">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yane & Paulo | Casamento">
+  <meta name="twitter:description" content="Celebrando o casamento de Yane e Paulo em 11 de abril de 2026.">
+  <meta name="twitter:image" content="media/YeP.jpeg">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260223-5">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Y&P</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand brand-desktop">Y&P</div>
+    <nav>
+      <a href="#home" class="nav-link active" data-target="home" aria-label="Home">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V10.5Z"/></svg>
+        </span>
+        <span>Home</span>
+      </a>
+      <a href="#historia" class="nav-link" data-target="historia" aria-label="Nossa História">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 4h10a4 4 0 0 1 4 4v12H9a4 4 0 0 0-4 4V4Z"/><path d="M9 20h10V8a4 4 0 0 0-4-4H5"/></svg>
+        </span>
+        <span>Nossa História</span>
+      </a>
+      <a href="#save-date" class="nav-link" data-target="save-date" aria-label="Save The Date">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 2v4M17 2v4M4 8h16M6 5h12a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/></svg>
+        </span>
+        <span>Save The Date</span>
+      </a>
+      <a href="#galeria" class="nav-link" data-target="galeria" aria-label="Galeria">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-6 6-2-2-5 5"/></svg>
+        </span>
+        <span>Galeria</span>
+      </a>
+      <a href="#casamento" class="nav-link" data-target="casamento" aria-label="Casamento">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="m7.5 12.5 3 3 6-7"/><circle cx="12" cy="12" r="9"/></svg>
+        </span>
+        <span>Casamento</span>
+      </a>
+      <a href="#localizacao" class="nav-link" data-target="localizacao" aria-label="Localização">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </span>
+        <span>Localização</span>
+      </a>
+      <a href="#presentes" class="nav-link" data-target="presentes" aria-label="Lista de Presentes">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 7H4v15h16V7ZM2 7h20v5H2z"/><path d="M12 7v15M7.5 4.5c0 1.4 1.2 2.5 2.5 2.5H12V4.5A2.5 2.5 0 0 0 7.5 4.5ZM16.5 4.5c0 1.4-1.2 2.5-2.5 2.5H12V4.5a2.5 2.5 0 0 1 4.5 0Z"/></svg>
+        </span>
+        <span>Lista de Presentes</span>
+      </a>
+      <a href="#rsvp" class="nav-link" data-target="rsvp" aria-label="RSVP">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+        </span>
+        <span>RSVP</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="content" id="mainContent">
+    <section id="home" class="section home">
+      <div class="hero-image-wrap">
+        <img src="./media/cover.jpg" alt="Foto dos noivos">
+      </div>
+      <div class="hero-text">
+        <h1>Yane + Paulo</h1>
+        <p>11 de abril, 2026</p>
+        <div class="hero-countdown" id="heroCountdown" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="historia" class="section floral-detail">
+      <h2>Nossa História</h2>
+      <article class="story-card">
+        <p>A nossa saga começou em 2006, na pista de atletismo da Unifor. Paulo Régis já estava lá todo profissional, achando que era o novo Usain Bolt, enquanto Yane tentava entrar para o time e acabou entrando mesmo foi na vida dele.</p>
+        <p>Namoramos, terminamos, cada um foi viver sua novela... mas o destino, que adora uma reviravolta, decidiu que a nossa história ainda tinha muitos capítulos pela frente. E tinha mesmo. Voltamos, ficamos, crescemos e seguimos juntos até hoje, colecionando histórias, risadas e algumas tretinhas leves (porque nenhum casal é de ferro).</p>
+        <p>Depois de muitos anos de estrada e 5 anos de noivado [sim, cinco, quase um doutorado em paciência] finalmente chegou o momento de começar um novo ciclo. Agora vamos oficializar o que o coração já sabia faz tempo: somos um do outro e estamos prontos para a próxima aventura.</p>
+        <p>E ter vocês acompanhando esse capítulo deixa tudo ainda mais especial.</p>
+        <p>BEIJOS!</p>
+      </article>
+    </section>
+
+    <section id="save-date" class="section">
+      <h2>Save The Date</h2>
+      <div class="video-frame">
+        <video controls loop playsinline>
+          <source src="media/Save the date PY.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
+      </div>
+    </section>
+
+    <section id="galeria" class="section">
+      <h2>Galeria</h2>
+      <div class="gallery-grid">
+        <img src="./media/Foto 1.jpg" alt="Foto 1 dos noivos">
+        <img src="./media/Foto 2.jpg" alt="Foto 2 dos noivos">
+        <img src="./media/Foto 3.jpg" alt="Foto 3 dos noivos">
+        <img src="./media/Foto 4.jpg" alt="Foto 4 dos noivos">
+        <img src="./media/Foto 5.jpg" alt="Foto 5 dos noivos">
+        <img src="./media/Foto 6.jpg" alt="Foto 6 dos noivos">
+      </div>
+    </section>
+
+    <section id="casamento" class="section floral-detail">
+      <h2>Casamento</h2>
+      <div class="info-grid">
+        <article class="info-card">
+          <h3>Quando</h3>
+          <p>11 de abril, 2026</p>
+          <p>Cerimônia de casamento: 15:30</p>
+          <p>Recepção: 17:30</p>
+        </article>
+        <article class="info-card">
+          <h3>Onde</h3>
+          <p>Igreja Nossa Senhora Perpétuo Socorro</p>
+          <p>(R. Albert Sabin, 061 - Guararapes)</p>
+          <p>Buffet Mango casa de eventos - 17:30</p>
+          <p>(R. Francisco Farias Filho, 250 - Guararapes)</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="localizacao" class="section">
+      <h2>Localização</h2>
+      <div class="maps-grid">
+        <article class="map-card">
+          <img src="media/igreja.webp" alt="Igreja Nossa Senhora Perpétuo Socorro">
+          <h3>Igreja</h3>
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Igreja+Nossa+Senhora+Perpetuo+Socorro+Guararapes" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+        </article>
+        <article class="map-card">
+          <img src="media/buffet.jpg" alt="Buffet Mango casa de eventos">
+          <h3>Buffet Mango</h3>
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Buffet+Mango+casa+de+eventos+Guararapes" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="presentes" class="section floral-detail">
+      <h2>Lista de Presentes</h2>
+      <article class="story-card">
+        <p>Queridos convidados,</p>
+        <p>Nossa lista de presentes funciona de um jeitinho especial: os itens aparecem como produtos, mas são apenas simbólicos. O valor escolhido por vocês vai direto para a nossa conta, e cada item representa apenas uma sugestão baseada em preços reais.</p>
+        <p>Optamos por esse formato porque, como ainda não temos nosso cantinho definitivo, não teríamos onde guardar tantos presentes físicos. Assim, cada contribuição ajuda a construir o nosso futuro lar - do jeitinho que sonhamos.</p>
+        <p>E claro: fiquem totalmente à vontade para escolher o valor que preferirem. O mais importante é o carinho e a presença de vocês nesse momento tão especial.</p>
+        <p>Com amor, Yane e Paulo Régis.</p>
+      </article>
+      <a href="lista-presentes.html" class="gift-btn">Ir para a Lista de Presentes</a>
+    </section>
+
+    <section id="rsvp" class="section">
+      <h2>RSVP</h2>
+      <div class="rsvp-callout" role="note" aria-label="Mensagem de confirmação de presença">
+        <span class="rsvp-callout-tag">Momento Especial</span>
+        <p class="rsvp-callout-title">Estamos ansiosos para celebrar com você!</p>
+        <p class="rsvp-callout-deadline">Confirme sua presença até <strong>15 de março</strong></p>
+      </div>
+      <div class="rsvp-layout">
+        <form class="rsvp-form">
+          <div class="field">
+            <input type="text" id="convidado1" name="convidado1" placeholder=" " required>
+            <label for="convidado1">Convidado</label>
+          </div>
+
+          <div class="field">
+            <input type="text" id="convidado2" name="convidado2" placeholder=" ">
+            <label for="convidado2">Convidado 2</label>
+          </div>
+
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder=" " required>
+            <label for="email">E-mail</label>
+          </div>
+
+          <div class="field">
+            <select id="temCriancas" name="temCriancas" required>
+              <option value="" selected disabled></option>
+              <option value="nao">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+            <label for="temCriancas">Há crianças?</label>
+          </div>
+
+          <div id="criancasBox" class="children-box hidden">
+            <div class="field">
+              <input type="number" id="qtdCriancas" name="qtdCriancas" min="1" max="10" placeholder=" ">
+              <label for="qtdCriancas">Quantas crianças?</label>
+            </div>
+            <div id="criancasDetalhes" class="children-list"></div>
+          </div>
+
+          <button type="submit">Confirmar Presença</button>
+        </form>
+        <div class="rsvp-photo-wrap">
+          <img src="media/YeP.jpeg" alt="Yane e Paulo">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-monogram">Y&amp;P</div>
+    <p>© 2026 por yane&amp; paulo. Criado orgulhosamente por <a href="https://refreshdesign.studio/">Refresh Design Studio</a></p>
+  </footer>
+
+  <div class="lightbox hidden" id="galleryLightbox" aria-hidden="true" role="dialog" aria-label="Galeria em tela cheia">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar galeria">×</button>
+    <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Foto anterior">‹</button>
+    <figure class="lightbox-figure">
+      <img id="lightboxImage" src="" alt="">
+      <figcaption id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav next" id="lightboxNext" aria-label="Próxima foto">›</button>
+  </div>
+
+  <script src="script.js?v=20260223-7"></script>
+</body>
+</html>
