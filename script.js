@@ -21,6 +21,12 @@ let sectionObserver = null;
 let galleryImages = [];
 let currentGalleryIndex = 0;
 let splashOpened = false;
+const WEDDING_YEAR = 2026;
+const WEDDING_MONTH = 3;
+const WEDDING_DAY = 11;
+const RSVP_CUTOFF_YEAR = 2026;
+const RSVP_CUTOFF_MONTH = 2;
+const RSVP_CUTOFF_DAY = 15;
 
 const closeMobileMenu = () => {
   if (window.innerWidth <= 860 && sidebar) {
@@ -34,6 +40,79 @@ const setActiveNav = (targetId) => {
   links.forEach((link) => {
     link.classList.toggle("active", link.dataset.target === targetId);
   });
+};
+
+const isWeddingMediaDay = (now = new Date()) => {
+  const weddingMediaStart = new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY, 0, 0, 0, 0);
+  return now >= weddingMediaStart;
+};
+
+const isRsvpClosed = (now = new Date()) => {
+  const cutoffStart = new Date(RSVP_CUTOFF_YEAR, RSVP_CUTOFF_MONTH, RSVP_CUTOFF_DAY, 0, 0, 0, 0);
+  return now >= cutoffStart;
+};
+
+const isPostWeddingHidePhase = (now = new Date()) => {
+  const hideStart = new Date(WEDDING_YEAR, WEDDING_MONTH, WEDDING_DAY + 1, 0, 0, 0, 0);
+  return now >= hideStart;
+};
+
+const syncPostWeddingContentVisibility = () => {
+  const shouldHide = isPostWeddingHidePhase();
+  const contentIds = ["localizacao", "rsvp"];
+
+  contentIds.forEach((id) => {
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.nav-link[data-target="${id}"]`);
+
+    if (section) {
+      section.toggleAttribute("hidden", shouldHide);
+      section.setAttribute("aria-hidden", String(shouldHide));
+    }
+
+    if (navLink) {
+      navLink.toggleAttribute("hidden", shouldHide);
+      navLink.setAttribute("aria-hidden", String(shouldHide));
+    }
+  });
+};
+
+const syncRsvpAvailability = () => {
+  const rsvpLayout = document.querySelector("#rsvp .rsvp-layout");
+  const deadlineEl = document.querySelector("#rsvp .rsvp-callout-deadline");
+  if (!deadlineEl) return;
+
+  const closed = isRsvpClosed();
+
+  if (rsvpLayout) {
+    rsvpLayout.toggleAttribute("hidden", closed);
+    rsvpLayout.setAttribute("aria-hidden", String(closed));
+  }
+
+  if (closed) {
+    deadlineEl.textContent = "Agradecemos pela confirmação de presença.";
+    deadlineEl.classList.add("is-closed");
+    return;
+  }
+
+  deadlineEl.innerHTML = "Confirme sua presença até <strong>15 de março</strong>";
+  deadlineEl.classList.remove("is-closed");
+};
+
+const syncWeddingMediaVisibility = () => {
+  const mediaSection = document.getElementById("fotos-casamento");
+  const mediaNavLink = document.querySelector('.nav-link[data-target="fotos-casamento"]');
+  const shouldShow = isWeddingMediaDay();
+
+  if (mediaSection) {
+    mediaSection.toggleAttribute("hidden", !shouldShow);
+    mediaSection.setAttribute("aria-hidden", String(!shouldShow));
+  }
+
+  if (mediaNavLink) {
+    mediaNavLink.toggleAttribute("hidden", !shouldShow);
+    mediaNavLink.setAttribute("aria-hidden", String(!shouldShow));
+  }
 };
 
 if (menuBtn && sidebar) {
@@ -197,6 +276,8 @@ const isValidPersonName = (value) =>
 const isValidEmailAddress = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 
 const bindRSVP = (signal) => {
+  if (isRsvpClosed()) return;
+
   const temCriancas = document.getElementById("temCriancas");
   const criancasBox = document.getElementById("criancasBox");
   const qtdCriancas = document.getElementById("qtdCriancas");
@@ -517,6 +598,9 @@ const initMainContent = () => {
   mainController = new AbortController();
   const { signal } = mainController;
 
+  syncWeddingMediaVisibility();
+  syncPostWeddingContentVisibility();
+  syncRsvpAvailability();
   bindSectionObserver();
   bindHeroCountdown(signal);
   bindGallery(signal);
