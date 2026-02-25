@@ -4,7 +4,7 @@ const links = Array.from(document.querySelectorAll(".nav-link"));
 const mainContent = document.getElementById("mainContent");
 const splashScreen = document.getElementById("splashScreen");
 const splashSeal = document.getElementById("splashSeal");
-const WEB3FORMS_ACCESS_KEY = "15a138bd-2431-4dca-8ecb-8557b3b1c0d5";
+const WEB3FORMS_ACCESS_KEY = "c28ec6dc-290b-422f-ab9b-879fe6007f9a";
 
 const lightbox = document.getElementById("galleryLightbox");
 const lightboxImage = document.getElementById("lightboxImage");
