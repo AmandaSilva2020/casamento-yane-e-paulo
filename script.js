@@ -367,7 +367,6 @@ const bindRSVP = (signal) => {
         access_key: WEB3FORMS_ACCESS_KEY,
         subject: "Envio de RSVP do casamento",
         from_name: "Site Yane & Paulo",
-        to: "amanda328@hotmail.com",
         message: lines.join("\n"),
         convidado_principal: convidado1,
         convidado_2: convidado2 || "Não informado",
