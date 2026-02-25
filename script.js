@@ -176,14 +176,53 @@ const bindGallery = (signal) => {
   });
 };
 
+const RSVP_MAX_NAME_LENGTH = 80;
+const RSVP_MAX_EMAIL_LENGTH = 120;
+const SUSPICIOUS_INPUT_PATTERN = /(<script|<\/script>|javascript:|vbscript:|on[a-z]+\s*=|data:text\/html)/i;
+
+const normalizeInputText = (value) =>
+  String(value ?? "")
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const sanitizeInputText = (value, maxLength) =>
+  normalizeInputText(value)
+    .replace(/[<>`{}[\]\\$]/g, "")
+    .slice(0, maxLength);
+
+const isValidPersonName = (value) =>
+  /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ' .-]{1,79}$/.test(value);
+
+const isValidEmailAddress = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+
 const bindRSVP = (signal) => {
   const temCriancas = document.getElementById("temCriancas");
   const criancasBox = document.getElementById("criancasBox");
   const qtdCriancas = document.getElementById("qtdCriancas");
   const criancasDetalhes = document.getElementById("criancasDetalhes");
   const form = document.querySelector(".rsvp-form");
+  const convidado1Input = document.getElementById("convidado1");
+  const convidado2Input = document.getElementById("convidado2");
+  const emailInput = document.getElementById("email");
+  const submitButton = form?.querySelector('button[type="submit"]');
 
-  if (!temCriancas || !criancasBox || !qtdCriancas || !criancasDetalhes || !form) return;
+  if (
+    !temCriancas ||
+    !criancasBox ||
+    !qtdCriancas ||
+    !criancasDetalhes ||
+    !form ||
+    !convidado1Input ||
+    !convidado2Input ||
+    !emailInput
+  ) {
+    return;
+  }
+
+  convidado1Input.maxLength = RSVP_MAX_NAME_LENGTH;
+  convidado2Input.maxLength = RSVP_MAX_NAME_LENGTH;
+  emailInput.maxLength = RSVP_MAX_EMAIL_LENGTH;
 
   const renderChildrenDetails = () => {
     const amount = Number.parseInt(qtdCriancas.value, 10);
@@ -195,11 +234,11 @@ const bindRSVP = (signal) => {
       row.className = "children-row";
       row.innerHTML = `
         <div class="field">
-          <input type="text" id="nomeCrianca${i}" name="nomeCrianca${i}" placeholder=" " required>
+          <input type="text" id="nomeCrianca${i}" name="nomeCrianca${i}" placeholder=" " maxlength="${RSVP_MAX_NAME_LENGTH}" required>
           <label for="nomeCrianca${i}">Nome da criança ${i}</label>
         </div>
         <div class="field">
-          <input type="number" id="idadeCrianca${i}" name="idadeCrianca${i}" min="0" max="17" placeholder=" " required>
+          <input type="number" id="idadeCrianca${i}" name="idadeCrianca${i}" min="0" max="15" step="1" placeholder=" " required>
           <label for="idadeCrianca${i}">Idade da criança ${i}</label>
         </div>
       `;
@@ -224,11 +263,85 @@ const bindRSVP = (signal) => {
     "submit",
     async (event) => {
       event.preventDefault();
-      const convidado1 = document.getElementById("convidado1")?.value.trim() || "Não informado";
-      const convidado2 = document.getElementById("convidado2")?.value.trim();
-      const email = document.getElementById("email")?.value.trim() || "Não informado";
+
+      const convidado1 = sanitizeInputText(convidado1Input.value, RSVP_MAX_NAME_LENGTH);
+      const convidado2 = sanitizeInputText(convidado2Input.value, RSVP_MAX_NAME_LENGTH);
+      const email = sanitizeInputText(emailInput.value.toLowerCase(), RSVP_MAX_EMAIL_LENGTH);
       const hasChildren = temCriancas.value === "sim";
       const childrenCount = hasChildren ? Number.parseInt(qtdCriancas.value || "0", 10) : 0;
+
+      convidado1Input.value = convidado1;
+      convidado2Input.value = convidado2;
+      emailInput.value = email;
+
+      if (!convidado1) {
+        alert("Informe o nome do convidado principal.");
+        convidado1Input.focus();
+        return;
+      }
+
+      if (!isValidPersonName(convidado1)) {
+        alert("Nome do convidado principal inválido. Use apenas letras, espaços, apóstrofo, ponto e hífen.");
+        convidado1Input.focus();
+        return;
+      }
+
+      if (convidado2 && !isValidPersonName(convidado2)) {
+        alert("Nome do convidado 2 inválido. Use apenas letras, espaços, apóstrofo, ponto e hífen.");
+        convidado2Input.focus();
+        return;
+      }
+
+      if (!email || !isValidEmailAddress(email)) {
+        alert("E-mail inválido. Verifique o formato (exemplo: nome@dominio.com).");
+        emailInput.focus();
+        return;
+      }
+
+      if (SUSPICIOUS_INPUT_PATTERN.test(`${convidado1} ${convidado2} ${email}`)) {
+        alert("Foram detectados caracteres/padrões inválidos no formulário.");
+        return;
+      }
+
+      if (hasChildren && (!Number.isInteger(childrenCount) || childrenCount < 1 || childrenCount > 10)) {
+        alert("Informe uma quantidade válida de crianças entre 1 e 10.");
+        qtdCriancas.focus();
+        return;
+      }
+
+      const childrenDetails = [];
+      if (hasChildren) {
+        for (let i = 1; i <= childrenCount; i += 1) {
+          const childNameInput = document.getElementById(`nomeCrianca${i}`);
+          const childAgeInput = document.getElementById(`idadeCrianca${i}`);
+          const childName = sanitizeInputText(childNameInput?.value, RSVP_MAX_NAME_LENGTH);
+          const childAgeRaw = normalizeInputText(childAgeInput?.value);
+          const childAge = Number.parseInt(childAgeRaw, 10);
+
+          if (childNameInput) childNameInput.value = childName;
+          if (childAgeInput) childAgeInput.value = Number.isInteger(childAge) ? String(childAge) : "";
+
+          if (!childName || !isValidPersonName(childName)) {
+            alert(`Nome da criança ${i} inválido.`);
+            childNameInput?.focus();
+            return;
+          }
+
+          if (!Number.isInteger(childAge) || childAge < 0 || childAge > 17) {
+            alert(`Idade da criança ${i} inválida. Use um número entre 0 e 17.`);
+            childAgeInput?.focus();
+            return;
+          }
+
+          if (SUSPICIOUS_INPUT_PATTERN.test(childName)) {
+            alert(`Foram detectados caracteres/padrões inválidos no nome da criança ${i}.`);
+            childNameInput?.focus();
+            return;
+          }
+
+          childrenDetails.push({ name: childName, age: childAge });
+        }
+      }
 
       const lines = [
         "Olá, Yane e Paulo.",
@@ -245,11 +358,9 @@ const bindRSVP = (signal) => {
         lines.push("");
         lines.push("Dados das crianças:");
 
-        for (let i = 1; i <= childrenCount; i += 1) {
-          const childName = document.getElementById(`nomeCrianca${i}`)?.value.trim() || "Não informado";
-          const childAge = document.getElementById(`idadeCrianca${i}`)?.value.trim() || "Não informado";
-          lines.push(`${i}. ${childName} (${childAge} anos)`);
-        }
+        childrenDetails.forEach((child, index) => {
+          lines.push(`${index + 1}. ${child.name} (${child.age} anos)`);
+        });
       }
 
       const payload = {
@@ -266,6 +377,8 @@ const bindRSVP = (signal) => {
       };
 
       try {
+        if (submitButton) submitButton.disabled = true;
+
         if (WEB3FORMS_ACCESS_KEY === "COLE_SUA_ACCESS_KEY_AQUI") {
           throw new Error("Configure sua access key do Web3Forms em script.js.");
         }
@@ -292,6 +405,8 @@ const bindRSVP = (signal) => {
       } catch (error) {
         const message = error instanceof Error ? error.message : "Não foi possível enviar agora.";
         alert(`Não foi possível enviar agora: ${message}`);
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     },
     { signal }
