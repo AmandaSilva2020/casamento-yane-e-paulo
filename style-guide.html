@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Style Guide | Yane & Paulo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: 255 255 255;
+      --black: 0 0 0;
+      --bg: 238 243 250;
+      --surface: 249 252 255;
+      --primary: 47 101 136;
+      --primary-2: 95 136 167;
+      --primary-dark: 39 77 106;
+      --text: 37 59 86;
+      --muted: 111 128 152;
+      --border: 207 224 251;
+      --sky: 216 227 241;
+      --rose: 223 197 206;
+      --success: 56 163 98;
+      --info: 21 94 176;
+      --focus: 122 171 240;
+      --shadow: 0 16px 45px rgb(var(--primary) / 0.16);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: "Manrope", sans-serif;
+      color: rgb(var(--text));
+      background:
+        radial-gradient(circle at 15% 10%, rgb(var(--sky) / 0.85) 0%, transparent 38%),
+        radial-gradient(circle at 88% 16%, rgb(var(--rose) / 0.36) 0%, transparent 35%),
+        linear-gradient(180deg, rgb(var(--sky) / 0.5) 0%, rgb(var(--bg)) 100%);
+    }
+
+    .guide {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid rgb(var(--border));
+      border-radius: calc(var(--radius) + 2px);
+      background: rgb(var(--white) / 0.78);
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(145deg, rgb(var(--sky) / 0.32) 0%, rgb(var(--white)) 56%, rgb(var(--rose) / 0.24) 100%);
+    }
+
+    .brand {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      border: 3px solid rgb(var(--white));
+      background: url("media/YeP.jpeg") center/cover no-repeat;
+      box-shadow: 0 8px 22px rgb(var(--black) / 0.2);
+    }
+
+    .kicker {
+      margin: 0 0 6px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgb(var(--primary-2));
+      font-size: 0.78rem;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      color: rgb(var(--primary-dark));
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+    }
+
+    .sub {
+      margin: 10px 0 0;
+      color: rgb(var(--muted));
+      max-width: 68ch;
+      line-height: 1.6;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .section-title {
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgb(var(--primary));
+      font-weight: 800;
+      font-family: "Manrope", sans-serif;
+    }
+
+    .palette {
+      display: grid;
+      gap: 11px;
+    }
+
+    .swatch {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid rgb(var(--border));
+      background: rgb(var(--white));
+    }
+
+    .dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgb(var(--black) / 0.08);
+      background: rgb(var(--swatch));
+    }
+
+    .name {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .value {
+      font-size: 0.86rem;
+      color: rgb(var(--muted));
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .typo .sample {
+      margin-bottom: 10px;
+    }
+
+    .typo .h1 {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-family: "Playfair Display", serif;
+      color: rgb(var(--primary-dark));
+      font-weight: 700;
+    }
+
+    .typo .h2 {
+      font-size: clamp(1.8rem, 2.7vw, 2.3rem);
+      font-family: "Playfair Display", serif;
+      color: rgb(var(--primary));
+    }
+
+    .typo .h3 {
+      font-size: clamp(1.3rem, 2vw, 1.55rem);
+      font-weight: 800;
+      color: rgb(var(--primary-2));
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .typo .body {
+      line-height: 1.7;
+      max-width: 54ch;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgb(var(--border));
+      background: rgb(var(--surface));
+      font-weight: 700;
+      color: rgb(var(--primary-dark));
+      font-size: 0.87rem;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: rgb(var(--white));
+      font-weight: 800;
+      background: linear-gradient(135deg, rgb(var(--primary)) 0%, rgb(var(--primary-2)) 100%);
+      box-shadow: 0 11px 24px rgb(var(--primary) / 0.2);
+    }
+
+    .btn.alt {
+      background: rgb(var(--primary-dark));
+      box-shadow: none;
+    }
+
+    .token-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .token-list li {
+      border: 1px solid rgb(var(--border));
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: rgb(var(--white));
+      font-size: 0.94rem;
+    }
+
+    .token-list code {
+      font-weight: 700;
+      color: rgb(var(--primary-dark));
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .note {
+      margin: 0;
+      border-left: 4px solid rgb(var(--primary-2));
+      background: rgb(var(--white));
+      border-radius: 10px;
+      padding: 12px 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 920px) {
+      body {
+        padding: 14px;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="guide">
+    <section class="panel hero">
+      <div class="brand" aria-hidden="true"></div>
+      <div>
+        <p class="kicker">Sistema Visual</p>
+        <h1>Style Guide - Yane & Paulo</h1>
+        <p class="sub">Referência visual e técnica para manter consistência no site. Este guia usa os mesmos tokens e padrões de componentes já implementados no projeto.</p>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <h2 class="section-title">Color Palette</h2>
+        <div class="palette">
+          <div class="swatch" style="--swatch: var(--primary);"><span class="dot"></span><span class="name">Primary</span><span class="value">47 101 136</span></div>
+          <div class="swatch" style="--swatch: var(--primary-2);"><span class="dot"></span><span class="name">Primary 2</span><span class="value">95 136 167</span></div>
+          <div class="swatch" style="--swatch: var(--primary-dark);"><span class="dot"></span><span class="name">Primary Dark</span><span class="value">39 77 106</span></div>
+          <div class="swatch" style="--swatch: var(--text);"><span class="dot"></span><span class="name">Text</span><span class="value">37 59 86</span></div>
+          <div class="swatch" style="--swatch: var(--muted);"><span class="dot"></span><span class="name">Muted</span><span class="value">111 128 152</span></div>
+          <div class="swatch" style="--swatch: var(--border);"><span class="dot"></span><span class="name">Border</span><span class="value">207 224 251</span></div>
+          <div class="swatch" style="--swatch: var(--sky);"><span class="dot"></span><span class="name">Sky</span><span class="value">216 227 241</span></div>
+          <div class="swatch" style="--swatch: var(--rose);"><span class="dot"></span><span class="name">Rose</span><span class="value">223 197 206</span></div>
+        </div>
+      </article>
+
+      <article class="panel typo">
+        <h2 class="section-title">Typography</h2>
+        <div class="sample h1">Header 1 - Playfair Display</div>
+        <div class="sample h2">Header 2 - Playfair Display</div>
+        <div class="sample h3">Header 3 - Manrope Bold</div>
+        <p class="sample body">Body copy em Manrope para manter legibilidade em textos mais longos. O tom do texto principal usa <strong>rgb(var(--text))</strong>, com apoio de <strong>rgb(var(--muted))</strong> para informações secundárias.</p>
+        <div class="chips">
+          <span class="chip">Momento Especial</span>
+          <span class="chip">RSVP</span>
+          <span class="chip">Save The Date</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <h2 class="section-title">Buttons & Actions</h2>
+        <div class="btns">
+          <button class="btn" type="button">Ação Primária</button>
+          <button class="btn alt" type="button">Ação Secundária</button>
+        </div>
+        <p class="note" style="margin-top: 14px;">Padrão: cantos arredondados, peso visual alto e gradiente da marca para ações principais.</p>
+      </article>
+
+      <article class="panel">
+        <h2 class="section-title">Design Tokens</h2>
+        <ul class="token-list">
+          <li><code>--radius</code>: raio base para cards e blocos.</li>
+          <li><code>--shadow</code>: sombra padrão de profundidade.</li>
+          <li><code>--nav-width</code>: largura fixa da sidebar desktop.</li>
+          <li><code>--surface</code>: fundos suaves de cartões e chips.</li>
+          <li><code>--primary-dark</code>: fundos escuros e overlays.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Guidelines</h2>
+      <p class="note">
+        Use sempre <code>rgb(var(--token))</code> para cores opacas e <code>rgb(var(--token) / alpha)</code> para transparência.
+        Evite cores literais fora do <code>:root</code>. Mantenha a paleta centralizada em poucos tokens core.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

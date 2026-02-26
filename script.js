@@ -26,7 +26,7 @@ const WEDDING_MONTH = 3;
 const WEDDING_DAY = 11;
 const RSVP_CUTOFF_YEAR = 2026;
 const RSVP_CUTOFF_MONTH = 2;
-const RSVP_CUTOFF_DAY = 15;
+const RSVP_CUTOFF_DAY = 18;
 
 const closeMobileMenu = () => {
   if (window.innerWidth <= 860 && sidebar) {
