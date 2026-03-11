@@ -15,7 +15,8 @@ const lightboxNext = document.getElementById("lightboxNext");
 
 const originalMainHTML = mainContent ? mainContent.innerHTML : "";
 
-let isGiftView = false;
+let isInlineView = false;
+let activeInlineTarget = null;
 let mainController = null;
 let sectionObserver = null;
 let galleryImages = [];
@@ -493,7 +494,7 @@ const bindRSVP = (signal) => {
   );
 };
 
-const loadGiftPageIntoMain = async (url) => {
+const loadInlinePageIntoMain = async (url, targetId) => {
   if (!mainContent) return;
   closeLightbox();
   mainController?.abort();
@@ -501,20 +502,21 @@ const loadGiftPageIntoMain = async (url) => {
   const separator = url.includes("?") ? "&" : "?";
   const urlWithBust = `${url}${separator}v=${Date.now()}`;
   const response = await fetch(urlWithBust, { cache: "no-store", headers: { Accept: "text/html" } });
-  if (!response.ok) throw new Error("Falha ao carregar lista de presentes.");
+  if (!response.ok) throw new Error("Falha ao carregar conteúdo.");
   const html = await response.text();
   const doc = new DOMParser().parseFromString(html, "text/html");
   const giftPage = doc.querySelector(".gift-page");
   const fallbackCard = doc.querySelector(".card");
-  if (!giftPage && !fallbackCard) throw new Error("Conteúdo da lista não encontrado.");
+  if (!giftPage && !fallbackCard) throw new Error("Conteúdo não encontrado.");
 
   mainContent.innerHTML = giftPage
     ? giftPage.outerHTML
-    : `<section id="presentes" class="section">${fallbackCard.outerHTML}</section>`;
+    : `<section id="${targetId ?? "conteudo"}" class="section">${fallbackCard.outerHTML}</section>`;
   window.scrollTo({ top: 0, behavior: "smooth" });
-  isGiftView = true;
-  sectionObserver?.disconnect();
-  setActiveNav("presentes");
+  isInlineView = true;
+  activeInlineTarget = targetId ?? null;
+  initMainContent();
+  if (targetId) setActiveNav(targetId);
 };
 
 const openSplashInvitation = () => {
@@ -551,28 +553,35 @@ if (splashScreen && splashSeal) {
 }
 
 const restoreMainContent = () => {
-  if (!mainContent || !isGiftView) return;
+  if (!mainContent || !isInlineView) return;
   mainContent.innerHTML = originalMainHTML;
-  isGiftView = false;
+  isInlineView = false;
+  activeInlineTarget = null;
   initMainContent();
 };
 
-const bindGiftLink = (signal) => {
-  const giftLink = document.querySelector(".gift-btn");
-  if (!giftLink) return;
+const bindInlinePageLinks = (signal) => {
+  const inlineLinks = Array.from(document.querySelectorAll("[data-inline-page]"));
+  if (!inlineLinks.length) return;
 
-  giftLink.addEventListener(
-    "click",
-    async (event) => {
-      event.preventDefault();
-      try {
-        await loadGiftPageIntoMain(giftLink.href);
-      } catch (error) {
-        window.location.href = giftLink.href;
-      }
-    },
-    { signal }
-  );
+  inlineLinks.forEach((link) => {
+    link.addEventListener(
+      "click",
+      async (event) => {
+        event.preventDefault();
+        const url = link.getAttribute("href");
+        const targetId = link.dataset.inlineTarget;
+        if (!url) return;
+
+        try {
+          await loadInlinePageIntoMain(url, targetId);
+        } catch (error) {
+          window.location.href = url;
+        }
+      },
+      { signal }
+    );
+  });
 };
 
 const bindGiftViewBackLink = (signal) => {
@@ -582,11 +591,12 @@ const bindGiftViewBackLink = (signal) => {
     "click",
     (event) => {
       event.preventDefault();
+      const returnTargetId = activeInlineTarget ?? "home";
       restoreMainContent();
-      const homeSection = document.getElementById("home");
-      if (homeSection) {
-        setActiveNav("home");
-        homeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      const returnSection = document.getElementById(returnTargetId);
+      if (returnSection) {
+        setActiveNav(returnTargetId);
+        returnSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     },
     { signal }
@@ -605,7 +615,7 @@ const initMainContent = () => {
   bindHeroCountdown(signal);
   bindGallery(signal);
   bindRSVP(signal);
-  bindGiftLink(signal);
+  bindInlinePageLinks(signal);
   bindGiftViewBackLink(signal);
 };
 
@@ -615,7 +625,7 @@ links.forEach((link) => {
     closeMobileMenu();
     closeLightbox();
 
-    if (isGiftView) {
+    if (isInlineView) {
       restoreMainContent();
     }
 
